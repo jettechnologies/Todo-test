@@ -1,0 +1,62 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+model User {
+    id        String   @id @default(cuid())
+    name      String
+    email     String?  @unique
+    createdAt DateTime @default(now()) @map("created_at")
+    updatedAt DateTime @updatedAt @map("updated_at")
+
+    // Relations
+    assignedTodos TodoAssignee[]
+
+    @@map("users")
+}
+
+model Todo {
+    id          String     @id @default(cuid())
+    taskName    String     @map("task_name")
+    status      TodoStatus @default(TODO)
+    dates       DateTime
+    priority    Priority   @default(NORMAL)
+    description String?
+    createdAt   DateTime   @default(now()) @map("created_at")
+    updatedAt   DateTime   @updatedAt @map("updated_at")
+
+    // Relations
+    assignees TodoAssignee[]
+
+    @@map("todos")
+}
+
+model TodoAssignee {
+    todoId String @map("todo_id")
+    userId String @map("user_id")
+
+    // Relations
+    todo Todo @relation(fields: [todoId], references: [id], onDelete: Cascade)
+    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@id([todoId, userId])
+    @@map("todo_assignees")
+}
+
+enum TodoStatus {
+    TODO        @map("todo")
+    IN_PROGRESS @map("in_progress")
+    COMPLETE    @map("complete")
+}
+
+enum Priority {
+    URGENT    @map("urgent")
+    IMPORTANT @map("important")
+    NORMAL    @map("normal")
+    LOW       @map("low")
+}
