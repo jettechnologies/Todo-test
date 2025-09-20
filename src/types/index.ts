@@ -32,3 +32,29 @@ export interface UpdateTodoRequest extends Partial<CreateTodoRequest> {
 // For compatibility with existing DataGrid component
 export type TransactionStatus = TodoStatus;
 export type PriorityStatus = Priority;
+
+export interface UserResponse {
+  id: string;
+  name: string;
+  email: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface AssigneeResponse {
+  todoId: string;
+  userId: string;
+  user: UserResponse;
+}
+
+export interface TodoResponse {
+  id: string;
+  taskName: string;
+  status: TodoStatus;
+  dates: string;
+  priority: Priority;
+  description: string;
+  createdAt: string;
+  updatedAt: string;
+  assignees: AssigneeResponse[];
+}

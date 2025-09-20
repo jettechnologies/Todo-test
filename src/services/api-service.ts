@@ -1,4 +1,8 @@
-import type { CreateTodoRequest, UpdateTodoRequest } from "@/types";
+import type {
+  CreateTodoRequest,
+  TodoResponse,
+  UpdateTodoRequest,
+} from "@/types";
 // utils/apiService.ts
 export interface PaginationMeta {
   page: number;
@@ -45,7 +49,7 @@ class ApiService {
 
   async getTodos(
     params?: Record<string, string | number | undefined>
-  ): Promise<PaginatedResponse<any>> {
+  ): Promise<PaginatedResponse<TodoResponse>> {
     let query = "";
 
     if (params) {

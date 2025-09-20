@@ -1,4 +1,5 @@
 import { Badge, Box, Text } from "@chakra-ui/react";
+import { Flag } from "iconsax-reactjs";
 
 type PriorityStatus = "urgent" | "important" | "normal" | "low";
 
@@ -13,15 +14,15 @@ export interface StatusProps {
 const getStatusStyles = (status: GlobalStatus) => {
   switch (status) {
     case "urgent":
-      return { color: "red.500", label: "URGENT" };
+      return { color: "hsla(356, 100%, 66%, 1)", label: "URGENT" };
     case "important":
-      return { color: "yellow.500", label: "IMPORTANT" };
+      return { color: "hsla(42, 91%, 59%, 1)", label: "IMPORTANT" };
     case "normal":
-      return { color: "green.500", label: "NORMAL" };
+      return { color: "hsla(177, 41%, 62%, 1)", label: "NORMAL" };
     case "low":
-      return { color: "gray.500", label: "LOW" };
+      return { color: "hsla(217, 15%, 76%, 1)", label: "LOW" };
     default:
-      return { color: "gray.400", label: status };
+      return { color: "hsla(217, 15%, 75%, 1)", label: status };
   }
 };
 
@@ -35,23 +36,12 @@ export const Status = ({ status, onClick, width }: StatusProps) => {
       height="24px"
       width={width || "auto"}
       px="0.6em"
-      borderRadius="md"
-      border="1px solid"
-      borderColor={color}
       background="white"
       onClick={onClick}
       _hover={{ cursor: onClick ? "pointer" : "default" }}
       gap={2}
     >
-      {/* Flag Icon */}
-      <Box
-        as="span"
-        width="10px"
-        height="14px"
-        bg={color}
-        borderRadius="2px"
-        clipPath="polygon(0 0, 100% 0, 100% 50%, 0 100%)"
-      />
+      <Flag variant="Bold" size={18} color={color} />
 
       {/* Text */}
       <Text

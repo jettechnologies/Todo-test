@@ -4,6 +4,9 @@ import {
   parseAsString,
   parseAsInteger,
 } from "nuqs";
+import type { TodoStatus } from "@prisma/client";
+
+export type StatusResponse = TodoStatus | "";
 
 export type UiComponents = "row-horizontal" | "row-vertical" | "";
 
@@ -28,6 +31,14 @@ const uiComponentParser = createParser({
   serialize: (value: UiComponents) => value,
 });
 
+const todoStatusParser = createParser({
+  parse: (value: string) => {
+    if (value) return value as StatusResponse;
+    return null;
+  },
+  serialize: (value: StatusResponse) => value,
+});
+
 export const useFilterStore = () => {
   const [filters, setFilters] = useQueryStates(
     {
@@ -35,6 +46,7 @@ export const useFilterStore = () => {
       search: optionalParseAsString.withDefault(""),
       page: parseAsInteger.withDefault(1),
       limit: parseAsInteger.withDefault(10),
+      status: todoStatusParser.withDefault(""),
     },
     {
       shallow: false,

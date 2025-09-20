@@ -19,20 +19,28 @@ import {
   RowHorizontal,
   RowVertical,
   TaskSquare,
-  Status,
   TickCircle,
+  Status,
 } from "iconsax-reactjs";
 import { ParagraphText } from "@/components/typography";
 import { Formik, Form } from "formik";
 import { InputField } from "@/components/ui";
 import { searchSchema } from "@/utils/schema";
-import { useFilterStore, type UiComponents } from "@/lib/query-store";
+import {
+  useFilterStore,
+  type UiComponents,
+  type StatusResponse,
+} from "@/lib/query-store";
+import { TodoTable } from "@/components/tables/todowy-table";
 
 export const TodoContainer = () => {
   const { filters, updateFilters } = useFilterStore();
 
   const handleChangeLayout = (layout: UiComponents) =>
     updateFilters({ ui: layout });
+
+  const handleStatusChange = (status: StatusResponse) =>
+    updateFilters({ status });
 
   return (
     <Box
@@ -208,70 +216,116 @@ export const TodoContainer = () => {
           rounded="10px"
           alignItems="center"
         >
+          {/* for todo */}
           <HStack
             height="40px"
-            background="#fff"
+            background={
+              filters.status === "TODO" ? "var(--light-purple-200)" : "#fff"
+            }
             rounded="10px"
             pl="10px"
             pr="5px"
             width="176px"
             justifyContent="space-between"
+            cursor="pointer"
+            onClick={() => handleStatusChange("TODO")}
           >
             <HStack>
-              <TaskSquare size={24} color="var(--light-purple-200)" />
+              <TaskSquare
+                size={24}
+                color={
+                  filters.status === "TODO"
+                    ? "hsla(270, 100%, 98%, 1)"
+                    : "var(--light-purple-200)"
+                }
+              />
               <ParagraphText value="To Do" weight="600" fontSize="14px" />
             </HStack>
             <Center
               height="32px"
               width="47px"
               rounded="10px"
-              background="var(--light-purple-200)"
+              background={
+                filters.status === "TODO"
+                  ? "hsla(270, 100%, 98%, 1)"
+                  : "var(--light-purple-200)"
+              }
             >
               <ParagraphText value="(20)" weight="600" fontSize="14px" />
             </Center>
           </HStack>
           {/* for in progress */}
           <HStack
-            background="#fff"
+            background={
+              filters.status === "IN_PROGRESS" ? "var(--yellow)" : "#fff"
+            }
             rounded="10px"
             height="40px"
             pl="10px"
             pr="5px"
+            cursor="pointer"
             width="212px"
             justifyContent="space-between"
+            onClick={() => handleStatusChange("IN_PROGRESS")}
           >
             <HStack>
-              <Status size={24} color="var(--yellow)" />
-              <ParagraphText value="To Do" weight="600" fontSize="14px" />
+              <Status
+                size={24}
+                color={
+                  filters.status === "IN_PROGRESS"
+                    ? "hsla(270, 100%, 98%, 1)"
+                    : "var(--yellow)"
+                }
+              />
+              <ParagraphText value="In Progress" weight="600" fontSize="14px" />
             </HStack>
             <Center
               height="32px"
               width="47px"
               rounded="10px"
-              background="var(--light-yellow-200)"
+              background={
+                filters.status === "IN_PROGRESS"
+                  ? "hsla(270, 100%, 98%, 1)"
+                  : "var(--yellow)"
+              }
             >
               <ParagraphText value="(20)" weight="600" fontSize="14px" />
             </Center>
           </HStack>
           {/* for completed */}
           <HStack
-            background="#fff"
+            background={
+              filters.status === "COMPLETE" ? "var(--light-green-500)" : "#fff"
+            }
             rounded="10px"
             height="40px"
             width="206px"
             pl="10px"
             pr="5px"
+            cursor="pointer"
             justifyContent="space-between"
+            onClick={() => handleStatusChange("COMPLETE")}
           >
             <HStack>
-              <TickCircle size={24} color="var(--light-green-500)" />
-              <ParagraphText value="To Do" weight="600" fontSize="14px" />
+              <TickCircle
+                size={24}
+                color={
+                  filters.status === "COMPLETE"
+                    ? "hsla(270, 100%, 98%, 1)"
+                    : "var(--light-green-500)"
+                }
+              />
+              <ParagraphText value="Complete" weight="600" fontSize="14px" />
             </HStack>
             <Center
               height="32px"
               width="47px"
               rounded="10px"
-              background="var(--light-green-200)"
+              background={
+                filters.status === "COMPLETE"
+                  ? "hsla(270, 100%, 98%, 1)"
+                  : "var(--light-green-500)"
+              }
             >
               <ParagraphText value="(20)" weight="600" fontSize="14px" />
             </Center>
@@ -279,7 +333,7 @@ export const TodoContainer = () => {
         </HStack>
         {/* the data table */}
         <Box width="full" minHeight="400">
-          data table
+          <TodoTable />
         </Box>
       </VStack>
     </Box>

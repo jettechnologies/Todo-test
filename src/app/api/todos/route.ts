@@ -4,6 +4,8 @@ import { CreateTodoRequest } from "@/types";
 
 export async function GET(request: NextRequest) {
   try {
+    console.log("is it hitting here");
+
     const { searchParams } = new URL(request.url);
     const page = parseInt(searchParams.get("page") || "1");
     const limit = parseInt(searchParams.get("limit") || "10");

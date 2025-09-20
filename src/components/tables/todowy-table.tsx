@@ -8,13 +8,17 @@ import { useRouter } from "next/navigation";
 import { getTodosOption } from "@/services/queries";
 import { useFilterStore } from "@/lib/query-store";
 import type { PaginatedResponse } from "@/services/api-service";
+import { convertToDateString } from "@/lib/misc";
+import { TodoResponse } from "@/types";
 
 // ✅ transform the todo response for the table
-const transformTodos = (todos: any[]) => {
+const transformTodos = (todos: TodoResponse[]) => {
   return todos.map((todo) => ({
     id: todo.id,
-    title: todo.title,
-    status: todo.completed ? "completed" : "pending",
+    name: todo.taskName,
+    assignee: todo.assignees.flatMap((assignee) => assignee.user.name),
+    date: convertToDateString(todo.dates),
+    status: todo.priority.toLowerCase(),
     createdAt: new Date(todo.createdAt).toLocaleDateString(),
   }));
 };
@@ -28,6 +32,7 @@ export const TodoTable = () => {
     page: filters.page,
     limit: filters.limit,
     search: filters.search || undefined,
+    status: Boolean(filters.status) ? filters.status : undefined,
   };
 
   const { data: todosData, isLoading } = useQuery({
@@ -42,20 +47,20 @@ export const TodoTable = () => {
 
   const todoColumns: ColumnDef<TodoRow>[] = [
     {
-      accessorKey: "id",
-      header: "ID",
+      accessorKey: "name",
+      header: "Name",
     },
     {
-      accessorKey: "title",
-      header: "Title",
+      accessorKey: "date",
+      header: "Date",
+    },
+    {
+      accessorKey: "assignee",
+      header: "Assignee",
     },
     {
       accessorKey: "status",
-      header: "Status",
-    },
-    {
-      accessorKey: "createdAt",
-      header: "Created At",
+      header: "Priority",
     },
     {
       accessorKey: "",
@@ -76,8 +81,8 @@ export const TodoTable = () => {
         loading={isLoading}
         tableAction={[
           {
-            label: "Edit",
-            onClick: (row) => router.push(`/todos/${row.original.id}/edit`),
+            label: "Mark as completed",
+            onClick: (row) => console.log("mark as completed", row.original),
           },
           {
             label: "Delete",

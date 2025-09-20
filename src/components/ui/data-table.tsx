@@ -33,6 +33,8 @@ import {
   PopoverContent,
   PopoverBody,
   PopoverArrow,
+  Avatar,
+  AvatarGroup,
   Select,
 } from "@chakra-ui/react";
 import {
@@ -186,11 +188,12 @@ export default function DataGrid<T>({
               >
                 {row.getVisibleCells().map((cell) => {
                   const thead = cell.column.columnDef.header;
-                  if (thead === "Status") {
+                  if (thead === "Priority") {
                     return (
                       <Td key={cell.id}>
                         <Status
                           key={cell.id}
+                          width="fit-content"
                           status={cell.getValue() as GlobalStatus}
                         />
                       </Td>
@@ -224,6 +227,17 @@ export default function DataGrid<T>({
                             </PopoverContent>
                           </Portal>
                         </Popover>
+                      </Td>
+                    );
+                  } else if (thead === "Assignee") {
+                    const assignees = cell.getValue() as string[];
+                    return (
+                      <Td key={cell.id}>
+                        <AvatarGroup size="sm" max={2}>
+                          {assignees.map((name, idx) => (
+                            <Avatar key={idx} name={name} />
+                          ))}
+                        </AvatarGroup>
                       </Td>
                     );
                   } else {
