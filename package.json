@@ -23,6 +23,7 @@
     "@prisma/client": "^6.16.2",
     "@tanstack/react-query": "^5.89.0",
     "@tanstack/react-table": "^8.21.3",
+    "date-fns": "^4.1.0",
     "formik": "^2.4.6",
     "framer-motion": "^12.23.16",
     "iconsax-reactjs": "^0.0.8",
