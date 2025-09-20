@@ -10,7 +10,7 @@ export default function Home() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      router.push("/todos");
+      router.push("/todowy?ui=row-horizontal");
     }, 5000);
 
     return () => clearTimeout(timer);
@@ -24,7 +24,12 @@ export default function Home() {
       minH="100vh"
       bg="gray.50"
     >
-      <Image src="/logo.png" alt="App Logo" width={80} height={80} />
+      <Image
+        src="/images/todo-logo.png"
+        alt="App Logo"
+        width={80}
+        height={80}
+      />
 
       <Spinner
         thickness="4px"

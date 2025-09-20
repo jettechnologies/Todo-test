@@ -1,6 +1,10 @@
-export const QUERYKEYS = {
+export const QUERY_KEYS = {
   todo: {
     all: () => ["todos"],
-    singleTodos: (id: number) => [...QUERYKEYS.todo.all(), id],
+    singleTodos: (id: string) => [...QUERY_KEYS.todo.all(), id],
+    list: (params?: Record<string, any>) => ["todos", { ...params }] as const,
+  },
+  user: {
+    all: () => ["user"],
   },
 };

@@ -1,3 +1,5 @@
+"use client";
+
 import { Box, List } from "@chakra-ui/react";
 import { type SidenavItem, SideNavItem } from "./sidenav-item";
 import Image from "next/image";
@@ -15,8 +17,8 @@ export const SideNav = ({ items }: SideNavProps) => {
       bg="#fff"
       pos="sticky"
       top={0}
-      width="287px"
-      p="40px"
+      width="250px"
+      p="30px"
       height="100vh"
       overflow="auto"
       border="1px solid var(--chakra-colors-gray-100)"
@@ -31,7 +33,6 @@ export const SideNav = ({ items }: SideNavProps) => {
       }}
     >
       <Box width="full">
-        {/* <Icon name="snappay-logo-black" /> */}
         <Image
           src="/images/todo-logo.png"
           alt="todo logo"

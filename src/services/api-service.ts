@@ -43,16 +43,28 @@ class ApiService {
     return response.json();
   }
 
-  // ✅ GET list of todos (with filters + pagination)
   async getTodos(
-    params?: Record<string, string | number>
+    params?: Record<string, string | number | undefined>
   ): Promise<PaginatedResponse<any>> {
     let query = "";
+
     if (params) {
+      // remove undefined values
+      const cleanedParams = Object.fromEntries(
+        Object.entries(params).filter(([_, v]) => v !== undefined)
+      ) as Record<string, string | number>;
+
       query = `?${new URLSearchParams(
-        params as Record<string, string>
+        Object.entries(cleanedParams).reduce(
+          (acc, [key, value]) => ({
+            ...acc,
+            [key]: String(value),
+          }),
+          {} as Record<string, string>
+        )
       ).toString()}`;
     }
+
     return this.request(`/todos${query}`);
   }
 

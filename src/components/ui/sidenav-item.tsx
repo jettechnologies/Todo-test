@@ -13,14 +13,9 @@ export interface SidenavItem {
 interface SideNavItemProps {
   item: SidenavItem;
   isActive?: boolean;
-  onMoveOver?: () => void;
 }
 
-export const SideNavItem = ({
-  item,
-  isActive = false,
-  onMoveOver,
-}: SideNavItemProps) => {
+export const SideNavItem = ({ item, isActive = false }: SideNavItemProps) => {
   return (
     <ListItem
       as={Link}
@@ -30,10 +25,13 @@ export const SideNavItem = ({
       fontFamily="var(--fakt)"
       fontSize="16px"
       fontWeight="500"
-      onMouseOver={onMoveOver}
-      color={isActive ? "var(--primary-600)" : "var(--black-400)"}
+      background={isActive ? "var(--light-gray-200)" : "transparent"}
+      height="40px"
+      px={isActive ? "30px" : "0px"}
+      alignItems="center"
+      rounded="10px"
+      color={isActive ? "var(--light-green-500)" : "var(--text-black-200)"}
     >
-      {/* <Icon name={isActive ? item.iconName.active : item.iconName.inactive} /> */}
       {item.label}
     </ListItem>
   );

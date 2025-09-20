@@ -7,8 +7,8 @@ export const SideNavLayout = ({ children }: { children: React.ReactNode }) => {
     <Grid
       templateAreas={`"nav header"
                             "nav main"`}
-      gridTemplateRows="96px auto"
-      gridTemplateColumns="287px 1fr"
+      gridTemplateRows="90px auto"
+      gridTemplateColumns="250px 1fr"
       minHeight="100dvh"
       maxWidth="1540px"
       mx="auto"

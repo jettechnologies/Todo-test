@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import {
   FormControl,
@@ -118,7 +120,8 @@ export const InputField = ({
         textTransform={labelTextTransform || "lowercase"}
         lineHeight="20px"
         fontWeight="400"
-        color={labelColor || "#211E1D"}>
+        color={labelColor || "#211E1D"}
+      >
         {label}{" "}
         {labelInfo && (
           <Text as="span" color="var(--deep-blood)" display="inline">
@@ -152,7 +155,8 @@ export const InputField = ({
               width="3rem"
               height="100%"
               display="flex"
-              alignItems="center">
+              alignItems="center"
+            >
               {icon}
             </InputLeftElement>
           )}
@@ -162,7 +166,8 @@ export const InputField = ({
               height="100%"
               display="flex"
               alignItems="center"
-              cursor="pointer">
+              cursor="pointer"
+            >
               <WarningCircle color="var(--deep-blood)" size="18" />
             </InputRightElement>
           ) : (
@@ -170,7 +175,8 @@ export const InputField = ({
               width="3rem"
               height="100%"
               display="flex"
-              alignItems="center">
+              alignItems="center"
+            >
               <Box onClick={handleShow} _hover={{ cursor: "pointer" }}>
                 {!show ? (
                   <EyeSlash color="var(--icon-dark)" size="18" />
@@ -205,7 +211,8 @@ export const InputField = ({
               height="100%"
               width="3rem"
               display="flex"
-              alignItems="center">
+              alignItems="center"
+            >
               {icon}
             </InputLeftElement>
           )}
@@ -215,7 +222,8 @@ export const InputField = ({
               height="100%"
               cursor="pointer"
               display="flex"
-              alignItems="center">
+              alignItems="center"
+            >
               <WarningCircle color="var(--deep-blood)" size="18" />
             </InputRightElement>
           ) : null}
@@ -250,7 +258,8 @@ export const TextAreaField = ({
           fontSize={labelSize || "16px"}
           lineHeight="22px"
           fontWeight="400"
-          color={labelColor || ""}>
+          color={labelColor || ""}
+        >
           {label}
         </FormLabel>
 
@@ -319,7 +328,8 @@ export const SwitchField = ({
           color={labelColor}
           fontSize={fontSize || "14px"}
           fontWeight={labelWeight || "normal"}
-          mb="0">
+          mb="0"
+        >
           {label}
           {isRequired && (
             <Text as="span" color="red.500" ml="1">
@@ -349,7 +359,8 @@ export const SwitchField = ({
           fontSize={fontSize || "14px"}
           fontWeight={labelWeight || "normal"}
           mb="0"
-          ml="1rem">
+          ml="1rem"
+        >
           {label}
           {isRequired && (
             <Text as="span" color="red.500" ml="1">
@@ -402,7 +413,8 @@ export const ChakraSelectField: React.FC<SelectProps> = ({
         name={name}
         value={field.value}
         onChange={(e) => helpers.setValue(e.target.value)}
-        onBlur={field.onBlur}>
+        onBlur={field.onBlur}
+      >
         <option value="" disabled>
           Select an option
         </option>
@@ -462,7 +474,8 @@ export const CustomCheckbox = ({
       cursor="pointer"
       userSelect="none"
       justifyContent="space-between"
-      {...rest}>
+      {...rest}
+    >
       <input {...getInputProps()} hidden />
 
       {/* Checkbox visual */}
@@ -478,7 +491,8 @@ export const CustomCheckbox = ({
           borderColor: "green.500",
         }}
         boxSize="24px"
-        {...getCheckboxProps(checkboxProps)}>
+        {...getCheckboxProps(checkboxProps)}
+      >
         {state.isChecked && <Check size={14} color="var(--text-1)" />}
       </Flex>
 
@@ -486,7 +500,8 @@ export const CustomCheckbox = ({
       <Text
         color={state.isChecked ? "green.700" : "gray.700"}
         fontWeight={state.isChecked ? "semibold" : "normal"}
-        {...getLabelProps(labelProps)}>
+        {...getLabelProps(labelProps)}
+      >
         {label}
       </Text>
     </chakra.label>

@@ -8,6 +8,8 @@ export const Header = () => {
       alignItems="center"
       height="full"
       bg="#fff"
+      color="black"
+      border="2px solid black"
     >
       Header
     </HStack>
