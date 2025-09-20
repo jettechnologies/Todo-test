@@ -1,0 +1,53 @@
+import { Box, List } from "@chakra-ui/react";
+import { type SidenavItem, SideNavItem } from "./sidenav-item";
+import Image from "next/image";
+import { usePathname } from "next/navigation";
+
+interface SideNavProps {
+  items: SidenavItem[];
+}
+
+export const SideNav = ({ items }: SideNavProps) => {
+  const pathSegments = usePathname();
+
+  return (
+    <Box
+      bg="#fff"
+      pos="sticky"
+      top={0}
+      width="287px"
+      p="40px"
+      height="100vh"
+      overflow="auto"
+      border="1px solid var(--chakra-colors-gray-100)"
+      css={{
+        "&::-webkit-scrollbar": {
+          height: "var(--chakra-sizes-1)",
+          width: "var(--chakra-sizes-1)",
+        },
+        "&::-webkit-scrollbar-thumb": {
+          backgroundColor: "var(--chakra-colors-gray-400)",
+        },
+      }}
+    >
+      <Box width="full">
+        {/* <Icon name="snappay-logo-black" /> */}
+        <Image
+          src="/images/todo-logo.png"
+          alt="todo logo"
+          width={100}
+          height={100}
+        />
+      </Box>
+      <List spacing="32px" mt="80px">
+        {items.map((item) => (
+          <SideNavItem
+            key={item.label}
+            item={item}
+            isActive={pathSegments.includes(item.to)}
+          />
+        ))}
+      </List>
+    </Box>
+  );
+};
