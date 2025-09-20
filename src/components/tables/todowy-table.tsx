@@ -3,15 +3,12 @@
 import DataGrid from "../ui/data-table";
 import type { ColumnDef } from "@tanstack/react-table";
 import { Box } from "@chakra-ui/react";
-import { useQuery, keepPreviousData } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { getTodosOption } from "@/services/queries";
 import { useFilterStore } from "@/lib/query-store";
 import type { PaginatedResponse } from "@/services/api-service";
 import { convertToDateString } from "@/lib/misc";
 import { TodoResponse } from "@/types";
 
-// ✅ transform the todo response for the table
 const transformTodos = (todos: TodoResponse[]) => {
   return todos.map((todo) => ({
     id: todo.id,
@@ -23,23 +20,14 @@ const transformTodos = (todos: TodoResponse[]) => {
   }));
 };
 
-export const TodoTable = () => {
+interface TodoTableProps {
+  todosData: PaginatedResponse<TodoResponse> | undefined;
+  isLoading?: boolean;
+}
+
+export const TodoTable = ({ todosData, isLoading }: TodoTableProps) => {
   const router = useRouter();
   const { filters, updateFilters } = useFilterStore();
-
-  // query params for API
-  const params = {
-    page: filters.page,
-    limit: filters.limit,
-    search: filters.search || undefined,
-    status: Boolean(filters.status) ? filters.status : undefined,
-  };
-
-  const { data: todosData, isLoading } = useQuery({
-    ...getTodosOption(params),
-    select: (data: PaginatedResponse<any>) => data,
-    placeholderData: keepPreviousData,
-  });
 
   const todos = transformTodos(todosData?.todos || []);
 
@@ -94,6 +82,9 @@ export const TodoTable = () => {
           pageSize: filters.limit,
           rowCount: todosData?.pagination?.totalCount || 0,
           onPageChange: (pageIndex) => updateFilters({ page: pageIndex }),
+          onPageSizeChange(pageSize) {
+            updateFilters({ limit: pageSize });
+          },
         }}
       />
     </Box>

@@ -32,9 +32,26 @@ import {
   type StatusResponse,
 } from "@/lib/query-store";
 import { TodoTable } from "@/components/tables/todowy-table";
+import { useQuery, keepPreviousData } from "@tanstack/react-query";
+import { getTodosOption } from "@/services/queries";
+import KanbanBoard from "@/components/shared/kanban-board";
 
 export const TodoContainer = () => {
   const { filters, updateFilters } = useFilterStore();
+
+  // query params for API
+  const params = {
+    page: filters.page,
+    limit: filters.limit,
+    search: filters.search || undefined,
+    status: Boolean(filters.status) ? filters.status : undefined,
+  };
+
+  const { data: todosData, isLoading } = useQuery({
+    ...getTodosOption(params),
+    select: (data) => data,
+    placeholderData: keepPreviousData,
+  });
 
   const handleChangeLayout = (layout: UiComponents) =>
     updateFilters({ ui: layout });
@@ -97,6 +114,9 @@ export const TodoContainer = () => {
               fontWeight="500"
               fontSize="1rem"
               color="white"
+              _hover={{
+                background: "var(--purple)",
+              }}
             >
               Export xlsx
             </Button>
@@ -109,6 +129,9 @@ export const TodoContainer = () => {
               fontWeight="500"
               fontSize="1rem"
               color="white"
+              _hover={{
+                background: "var(--light-green-500)",
+              }}
             >
               Add Task
             </Button>
@@ -184,6 +207,12 @@ export const TodoContainer = () => {
                   : "transparent"
               }
               onClick={() => handleChangeLayout("row-horizontal")}
+              _hover={{
+                background:
+                  filters.ui === "row-horizontal"
+                    ? "var(--light-green-500)"
+                    : "transparent",
+              }}
             />
 
             <IconButton
@@ -205,6 +234,12 @@ export const TodoContainer = () => {
                   ? "var(--light-green-500)"
                   : "transparent"
               }
+              _hover={{
+                background:
+                  filters.ui === "row-vertical"
+                    ? "var(--light-green-500)"
+                    : "transparent",
+              }}
             />
           </HStack>
         </HStack>
@@ -333,7 +368,13 @@ export const TodoContainer = () => {
         </HStack>
         {/* the data table */}
         <Box width="full" minHeight="400">
-          <TodoTable />
+          {filters.ui === "row-horizontal" ? (
+            <TodoTable todosData={todosData} isLoading={isLoading} />
+          ) : (
+            filters.ui === "row-vertical" && (
+              <KanbanBoard todosData={todosData} isLoading={isLoading} />
+            )
+          )}
         </Box>
       </VStack>
     </Box>

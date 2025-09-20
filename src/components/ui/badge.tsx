@@ -26,7 +26,7 @@ const getStatusStyles = (status: GlobalStatus) => {
   }
 };
 
-export const Status = ({ status, onClick, width }: StatusProps) => {
+export const StatusBadge = ({ status, onClick, width }: StatusProps) => {
   const { color, label } = getStatusStyles(status);
 
   return (
@@ -35,11 +35,11 @@ export const Status = ({ status, onClick, width }: StatusProps) => {
       alignItems="center"
       height="24px"
       width={width || "auto"}
-      px="0.6em"
+      // px="0.6em"
       background="white"
       onClick={onClick}
       _hover={{ cursor: onClick ? "pointer" : "default" }}
-      gap={2}
+      gap={4}
     >
       <Flag variant="Bold" size={18} color={color} />
 

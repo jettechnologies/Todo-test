@@ -16,7 +16,8 @@ import {
   SearchNormal1,
   Notification,
   CloseCircle,
-  Export,
+  Link,
+  ArrowDown2,
 } from "iconsax-reactjs";
 import Image from "next/image";
 
@@ -59,48 +60,72 @@ export const Header = () => {
       <HStack spacing="12px">
         {/* App Icons */}
         <Box
-          w="32px"
-          h="32px"
+          w="46px"
+          h="46px"
           borderRadius="md"
-          bg="var(--light-yellow-200)"
+          bg="transparent"
+          border="1px solid hsla(221, 46%, 95%, 1)"
           display="flex"
           alignItems="center"
           justifyContent="center"
         >
-          <Image src="/icons/icon1.svg" alt="app1" width={20} height={20} />
+          <Image
+            src="/images/header-img-1.png"
+            alt="app1"
+            width={20}
+            height={20}
+          />
         </Box>
         <Box
-          w="32px"
-          h="32px"
+          w="46px"
+          h="46px"
           borderRadius="md"
-          bg="var(--light-green-200)"
+          bg="#fff"
+          border="1px solid hsla(221, 46%, 95%, 1)"
           display="flex"
           alignItems="center"
           justifyContent="center"
         >
-          <Image src="/icons/icon2.svg" alt="app2" width={20} height={20} />
+          <Image
+            src="/images/header-img-2.png"
+            alt="app2"
+            width={20}
+            height={20}
+          />
         </Box>
         <Box
-          w="32px"
-          h="32px"
+          w="46px"
+          h="46px"
           borderRadius="md"
-          bg="var(--light-gray-200)"
+          bg="transparent"
+          border="1px solid hsla(221, 46%, 95%, 1)"
           display="flex"
           alignItems="center"
           justifyContent="center"
         >
-          <Image src="/icons/icon3.svg" alt="app3" width={20} height={20} />
+          <Image
+            src="/images/header-img-3.png"
+            alt="app3"
+            width={20}
+            height={20}
+          />
         </Box>
         <Box
-          w="32px"
-          h="32px"
+          w="46px"
+          h="46px"
           borderRadius="md"
-          bg="var(--light-gray-200)"
+          bg="transparent"
+          border="1px solid hsla(221, 46%, 95%, 1)"
           display="flex"
           alignItems="center"
           justifyContent="center"
         >
-          <Image src="/icons/icon4.svg" alt="app4" width={20} height={20} />
+          <Image
+            src="/images/header-img-4.png"
+            alt="app4"
+            width={20}
+            height={20}
+          />
         </Box>
 
         {/* "Melding maken" Button */}
@@ -142,39 +167,39 @@ export const Header = () => {
       <HStack spacing="14px">
         <IconButton
           aria-label="share"
-          icon={<Export size="20" color="gray" />}
+          icon={<Link size="20" color="gray" />}
           variant="ghost"
-          size="sm"
+          width="40px"
+          height="46px"
+          rounded="10px"
+          background="hsla(0, 0%, 97%, 1)"
+          border="1px solid hsla(224, 48%, 95%, 1)"
         />
         <IconButton
           aria-label="notifications"
           icon={<Notification size="20" color="gray" />}
           variant="ghost"
-          size="sm"
+          width="40px"
+          height="46px"
+          rounded="full"
+          background="hsla(0, 0%, 97%, 1)"
+          border="1px solid hsla(224, 48%, 95%, 1)"
         />
-        <HStack>
-          <Avatar size="sm" src="/avatars/paul.png" name="Paul" />
+        <HStack
+          rounded="50px"
+          background="hsla(0, 0%, 97%, 1)"
+          px="5px"
+          py="3px"
+        >
+          <Avatar size="sm" src="/images/user-avatar.png" name="Paul" />
           <Text fontSize="14px">Hi Paul</Text>
+          <ArrowDown2
+            size={14}
+            variant="Outline"
+            color="hsla(210, 5%, 45%, 1)"
+          />
         </HStack>
       </HStack>
     </HStack>
   );
 };
-
-// import { HStack } from "@chakra-ui/react";
-
-// export const Header = () => {
-//   return (
-//     <HStack
-//       justifyContent="space-between"
-//       px="40px"
-//       alignItems="center"
-//       height="full"
-//       bg="#fff"
-//       color="black"
-//       border="2px solid black"
-//     >
-//       Header
-//     </HStack>
-//   );
-// };

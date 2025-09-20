@@ -44,7 +44,7 @@ import {
   ChevronsRight,
   Ellipsis,
 } from "lucide-react";
-import { Status, type GlobalStatus } from "./badge";
+import { StatusBadge, type GlobalStatus } from "./badge";
 
 type Props<T> = {
   columns: ColumnDef<T>[];
@@ -142,7 +142,12 @@ export default function DataGrid<T>({
   );
 
   return (
-    <Box w="full" overflowX="auto">
+    <Box
+      w="full"
+      overflowX="auto"
+      border="1px solid hsla(221, 39%, 86%, 1)"
+      rounded="10px"
+    >
       {/* Table */}
       <Table variant="simple" size="sm">
         <Thead bg="gray.100" height="40px">
@@ -191,7 +196,7 @@ export default function DataGrid<T>({
                   if (thead === "Priority") {
                     return (
                       <Td key={cell.id}>
-                        <Status
+                        <StatusBadge
                           key={cell.id}
                           width="fit-content"
                           status={cell.getValue() as GlobalStatus}
@@ -276,21 +281,31 @@ export default function DataGrid<T>({
         px={4}
         py={3}
         flexWrap="wrap"
+        height="80px"
         gap={3}
       >
         {/* Pagination buttons */}
-        <Flex gap={1} align="center">
+        <Flex
+          gap={1}
+          align="center"
+          height="40px"
+          rounded="20px"
+          px="10px"
+          background="hsla(0, 0%, 97%, 1)"
+        >
           <Button
-            size="sm"
-            variant="outline"
+            boxSize="30px"
+            variant="ghost"
+            rounded="full"
             onClick={() => table.setPageIndex(0)}
             isDisabled={!table.getCanPreviousPage()}
           >
             <Icon as={ChevronsLeft} boxSize={4} />
           </Button>
           <Button
-            size="sm"
-            variant="outline"
+            boxSize="30px"
+            variant="ghost"
+            rounded="full"
             onClick={() => table.previousPage()}
             isDisabled={!table.getCanPreviousPage()}
           >
@@ -300,26 +315,30 @@ export default function DataGrid<T>({
           {visiblePages.map((page) => (
             <Button
               key={page}
-              size="sm"
+              boxSize="30px"
+              rounded="full"
               variant={page === currentPage ? "solid" : "outline"}
-              colorScheme={page === currentPage ? "blue" : "gray"}
+              colorScheme="greeen"
               onClick={() => table.setPageIndex(page - 1)}
+              px="0"
             >
               {page}
             </Button>
           ))}
 
           <Button
-            size="sm"
-            variant="outline"
+            boxSize="30px"
+            variant="ghost"
+            rounded="full"
             onClick={() => table.nextPage()}
             isDisabled={!table.getCanNextPage()}
           >
             <Icon as={ArrowRight} boxSize={4} />
           </Button>
           <Button
-            size="sm"
-            variant="outline"
+            boxSize="30px"
+            variant="ghost"
+            rounded="full"
             onClick={() => table.setPageIndex(pageCount - 1)}
             isDisabled={!table.getCanNextPage()}
           >
@@ -331,7 +350,9 @@ export default function DataGrid<T>({
         <Flex align="center" gap={2}>
           <Text fontSize="sm">Rows per page:</Text>
           <Select
-            size="sm"
+            height="40px"
+            rounded="20px"
+            background="hsla(0, 0%, 97%, 1)"
             w="80px"
             value={table.getState().pagination.pageSize}
             onChange={(e) => {

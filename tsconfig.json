@@ -34,7 +34,7 @@
       "@services/*": ["./src/services/*"],
       "@mutations/*": ["./src/mutations/*"],
       "@types/*": ["./src/utils/types/*"],
-      "@api/*": ["./src/api/*"],
+      "@api/*": ["./src/app/api/*"],
       "@data/*": ["./src/data/*"]
     }
   },
