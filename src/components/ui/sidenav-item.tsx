@@ -2,7 +2,7 @@ import { ListItem } from "@chakra-ui/react";
 import Link from "next/link";
 export interface SidenavItem {
   //   icon: React.ComponentType<SVGSVGElement>;
-  iconName: {
+  iconName?: {
     active: string;
     inactive: string;
   };

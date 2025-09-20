@@ -1,0 +1,34 @@
+import { User, Todo, TodoStatus, Priority, TodoAssignee } from "@prisma/client";
+
+export type { User, Todo, TodoStatus, Priority };
+
+// Extended types for API responses
+export type TodoWithAssignees = Todo & {
+  assignees: (TodoAssignee & {
+    user: User;
+  })[];
+};
+
+export type UserWithTodos = User & {
+  assignedTodos: (TodoAssignee & {
+    todo: Todo;
+  })[];
+};
+
+// API request types
+export interface CreateTodoRequest {
+  taskName: string;
+  status: TodoStatus;
+  dates: Date | string;
+  assigneeIds: string[];
+  priority: Priority;
+  description?: string;
+}
+
+export interface UpdateTodoRequest extends Partial<CreateTodoRequest> {
+  id: string;
+}
+
+// For compatibility with existing DataGrid component
+export type TransactionStatus = TodoStatus;
+export type PriorityStatus = Priority;
