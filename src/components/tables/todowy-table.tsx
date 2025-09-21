@@ -73,7 +73,18 @@ export const TodoTable = ({ todosData, isLoading }: TodoTableProps) => {
         loading={isLoading}
         tableAction={[
           {
-            label: "Mark",
+            label: "In Progress",
+            onClick: async (row) => {
+              await updateTodo({
+                id: row.original.id,
+                params: { status: "IN_PROGRESS" },
+              });
+            },
+            isLoading: updatingTodo,
+            loadingText: "In progress...",
+          },
+          {
+            label: "Complete",
             onClick: async (row) => {
               await updateTodo({
                 id: row.original.id,
@@ -81,11 +92,10 @@ export const TodoTable = ({ todosData, isLoading }: TodoTableProps) => {
               });
             },
             isLoading: updatingTodo,
-            loadingText: "Marking...",
+            loadingText: "Completing...",
           },
           {
             label: "Delete",
-            // onClick: (row) => console.log("delete", row.original),
             onClick: async (row) => {
               await deleteTodo({
                 id: row.original.id,
