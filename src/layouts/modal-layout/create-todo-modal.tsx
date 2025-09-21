@@ -93,6 +93,7 @@ export const CreateTodoModal = ({ isOpen, onClose }: CreateTodoModalProps) => {
           }}
         >
           {(formik) => {
+            console.log(formik.errors, "formik errors");
             return (
               <VStack width="full" spacing={5} as={Form} px={4}>
                 <InputField

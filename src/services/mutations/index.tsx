@@ -16,6 +16,7 @@ export const useCreateTodo = () =>
     meta: {
       invalidatesQuery: QUERY_KEYS.todo.all(),
       errorMessage: "Error while creating todo",
+      successMessage: "Todo created successfully",
     },
   });
 
@@ -31,6 +32,7 @@ export const useUpdateTodo = () => {
       queryClient.invalidateQueries({
         queryKey: QUERY_KEYS.todo.singleTodos(variables.id),
       });
+      openToast("Todo updated successfully", "success");
     },
 
     onError: (error: Error) => {
@@ -51,15 +53,12 @@ export const useDeleteTodo = () => {
 
   return useMutation({
     mutationFn: ({ id }: { id: string }) => apiService.deleteTodo(id),
-    // meta: {
-    //   invalidatesQuery: QUERY_KEYS.todo.all(),
-    //   errorMessage: "Error while deleting todos",
-    // },
 
     onSuccess: (_data, variables) => {
       queryClient.invalidateQueries({
         queryKey: QUERY_KEYS.todo.singleTodos(variables.id),
       });
+      openToast("Todo deleted successfully", "success");
     },
 
     onError: (error: Error) => {

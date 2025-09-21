@@ -19,7 +19,12 @@ export const SideNavLayout = ({ children }: { children: React.ReactNode }) => {
       <GridItem area="nav">
         <SideNav items={sideNavItems} />
       </GridItem>
-      <GridItem area="main" background="var(--light-purple-300)">
+      <GridItem
+        area="main"
+        background="hsla(0, 0%, 97%, 1)"
+        py="20px"
+        px="40px"
+      >
         {children}
       </GridItem>
     </Grid>

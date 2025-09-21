@@ -142,7 +142,7 @@ export const TodoContainer = () => {
           </HStack>
         </HStack>
       </Box>
-      <VStack spacing="10px" width="full" p="20px" border="1px solid black">
+      <VStack spacing="10px" width="full" p="20px">
         <HStack
           height="60px"
           width="full"
@@ -290,7 +290,14 @@ export const TodoContainer = () => {
                   : "var(--light-purple-200)"
               }
             >
-              <ParagraphText value="(20)" weight="600" fontSize="14px" />
+              <ParagraphText
+                value={`(${
+                  todosData?.data.filter((todo) => todo.status === "TODO")
+                    .length || 0
+                })`}
+                weight="600"
+                fontSize="14px"
+              />
             </Center>
           </HStack>
           {/* for in progress */}
@@ -328,7 +335,15 @@ export const TodoContainer = () => {
                   : "var(--yellow)"
               }
             >
-              <ParagraphText value="(20)" weight="600" fontSize="14px" />
+              <ParagraphText
+                value={`(${
+                  todosData?.data.filter(
+                    (todo) => todo.status === "IN_PROGRESS"
+                  ).length || 0
+                })`}
+                weight="600"
+                fontSize="14px"
+              />
             </Center>
           </HStack>
           {/* for completed */}
@@ -366,7 +381,14 @@ export const TodoContainer = () => {
                   : "var(--light-green-500)"
               }
             >
-              <ParagraphText value="(20)" weight="600" fontSize="14px" />
+              <ParagraphText
+                value={`(${
+                  todosData?.data.filter((todo) => todo.status === "COMPLETE")
+                    .length || 0
+                })`}
+                weight="600"
+                fontSize="14px"
+              />
             </Center>
           </HStack>
         </HStack>

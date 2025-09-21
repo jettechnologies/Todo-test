@@ -39,7 +39,7 @@ const statusOptions: StatusOption[] = [
     bgColor: "var(--light-purple-200)",
   },
   {
-    value: "inprogress",
+    value: "in_progress",
     label: "In Progress",
     icon: <TickCircle variant="Bold" size={24} color="var(--yellow)" />,
     color: "var(--yellow)",

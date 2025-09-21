@@ -77,7 +77,7 @@ export async function POST(request: NextRequest) {
         assignees: {
           create: assigneeIds.map((userId) => ({
             user: {
-              connect: { id: userId }, // ✅ connect existing users
+              connect: { id: userId },
             },
           })),
         },
@@ -103,41 +103,3 @@ export async function POST(request: NextRequest) {
     );
   }
 }
-
-// export async function POST(request: NextRequest) {
-//   try {
-//     const body: CreateTodoRequest = await request.json();
-//     const { taskName, status, dates, assigneeIds, priority, description } =
-//       body;
-
-//     const todo = await prisma.todo.create({
-//       data: {
-//         taskName,
-//         status,
-//         dates: new Date(dates),
-//         priority,
-//         description,
-//         assignees: {
-//           create: assigneeIds.map((userId) => ({
-//             userId,
-//           })),
-//         },
-//       },
-//       include: {
-//         assignees: {
-//           include: {
-//             user: true,
-//           },
-//         },
-//       },
-//     });
-
-//     return NextResponse.json(todo, { status: 201 });
-//   } catch (error) {
-//     console.error("Error creating todo:", error);
-//     return NextResponse.json(
-//       { error: "Failed to create todo" },
-//       { status: 500 }
-//     );
-//   }
-// }

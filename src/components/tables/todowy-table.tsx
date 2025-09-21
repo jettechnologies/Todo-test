@@ -8,6 +8,7 @@ import { useFilterStore } from "@/lib/query-store";
 import type { PaginatedResponse } from "@/services/api-service";
 import { convertToDateString } from "@/lib/misc";
 import { TodoResponse } from "@/types";
+import { useUpdateTodo, useDeleteTodo } from "@/services/mutations";
 
 const transformTodos = (todos: TodoResponse[]) => {
   return todos.map((todo) => ({
@@ -61,6 +62,9 @@ export const TodoTable = ({ todosData, isLoading }: TodoTableProps) => {
     },
   ];
 
+  const { mutateAsync: updateTodo, isPending: updatingTodo } = useUpdateTodo();
+  const { mutateAsync: deleteTodo, isPending: deletingTodo } = useDeleteTodo();
+
   return (
     <Box width="full">
       <DataGrid
@@ -69,12 +73,26 @@ export const TodoTable = ({ todosData, isLoading }: TodoTableProps) => {
         loading={isLoading}
         tableAction={[
           {
-            label: "Mark as completed",
-            onClick: (row) => console.log("mark as completed", row.original),
+            label: "Mark",
+            onClick: async (row) => {
+              await updateTodo({
+                id: row.original.id,
+                params: { status: "COMPLETE" },
+              });
+            },
+            isLoading: updatingTodo,
+            loadingText: "Marking...",
           },
           {
             label: "Delete",
-            onClick: (row) => console.log("delete", row.original),
+            // onClick: (row) => console.log("delete", row.original),
+            onClick: async (row) => {
+              await deleteTodo({
+                id: row.original.id,
+              });
+            },
+            isLoading: deletingTodo,
+            loadingText: "Deleting...",
           },
         ]}
         pagination={{
