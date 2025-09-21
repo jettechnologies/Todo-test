@@ -239,9 +239,11 @@ const KanbanColumn = ({
 const KanbanBoard = ({
   todosData,
   isLoading,
+  addTask,
 }: {
   todosData: PaginatedResponse<TodoResponse> | undefined;
   isLoading?: boolean;
+  addTask?: () => void;
 }) => {
   if (isLoading) {
     return (
@@ -261,10 +263,6 @@ const KanbanBoard = ({
   );
   const completeTasks = todos.filter((t) => t.status === TodoStatus.COMPLETE);
 
-  const handleAddTask = (status: TodoStatus) => {
-    console.log(`Add task to ${status}`);
-  };
-
   return (
     <Box minH="100vh">
       {/* Kanban Columns */}
@@ -274,7 +272,7 @@ const KanbanBoard = ({
           tasks={todoTasks}
           count={todoTasks.length}
           status={TodoStatus.TODO}
-          onAddTask={() => handleAddTask(TodoStatus.TODO)}
+          onAddTask={() => addTask?.()}
         />
 
         <KanbanColumn
@@ -282,7 +280,7 @@ const KanbanBoard = ({
           tasks={inProgressTasks}
           count={inProgressTasks.length}
           status={TodoStatus.IN_PROGRESS}
-          onAddTask={() => handleAddTask(TodoStatus.IN_PROGRESS)}
+          onAddTask={() => addTask?.()}
         />
 
         <KanbanColumn
@@ -290,7 +288,7 @@ const KanbanBoard = ({
           tasks={completeTasks}
           count={completeTasks.length}
           status={TodoStatus.COMPLETE}
-          onAddTask={() => handleAddTask(TodoStatus.COMPLETE)}
+          onAddTask={() => addTask?.()}
         />
       </HStack>
     </Box>

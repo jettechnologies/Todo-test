@@ -25,7 +25,7 @@ import { format, addMonths, isSameDay, startOfToday, isBefore } from "date-fns";
 import { ParagraphText } from "../typography";
 import type { FormikProps } from "formik";
 
-interface DatePickerProps extends ChakraBoxProps {
+export interface DatePickerProps extends ChakraBoxProps {
   formik: FormikProps<any>;
   fieldName: string;
   onDateChange?: (date: Date) => void;

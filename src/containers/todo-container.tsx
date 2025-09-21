@@ -35,8 +35,11 @@ import { TodoTable } from "@/components/tables/todowy-table";
 import { useQuery, keepPreviousData } from "@tanstack/react-query";
 import { getTodosOption } from "@/services/queries";
 import KanbanBoard from "@/components/shared/kanban-board";
+import { CreateTodoModal } from "@/layouts/modal-layout";
+import { useState } from "react";
 
 export const TodoContainer = () => {
+  const [isCreatingTodo, setIsCreatingTodo] = useState(false);
   const { filters, updateFilters } = useFilterStore();
 
   // query params for API
@@ -132,6 +135,7 @@ export const TodoContainer = () => {
               _hover={{
                 background: "var(--light-green-500)",
               }}
+              onClick={() => setIsCreatingTodo(true)}
             >
               Add Task
             </Button>
@@ -372,11 +376,20 @@ export const TodoContainer = () => {
             <TodoTable todosData={todosData} isLoading={isLoading} />
           ) : (
             filters.ui === "row-vertical" && (
-              <KanbanBoard todosData={todosData} isLoading={isLoading} />
+              <KanbanBoard
+                todosData={todosData}
+                isLoading={isLoading}
+                addTask={() => setIsCreatingTodo(true)}
+              />
             )
           )}
         </Box>
       </VStack>
+
+      <CreateTodoModal
+        isOpen={isCreatingTodo}
+        onClose={() => setIsCreatingTodo(false)}
+      />
     </Box>
   );
 };

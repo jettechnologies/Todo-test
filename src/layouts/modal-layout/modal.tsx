@@ -96,8 +96,9 @@ export const ModalLayout = ({
                   display="flex"
                   justifyContent="center"
                   alignItems="center"
+                  border="2px solid black"
                 >
-                  <X size={20} color="var(--gray-700)" stroke="2px" />
+                  <X size={20} color="var(--text-black-200)" stroke="2px" />
                 </Box>
               )}
               {!title ? null : (

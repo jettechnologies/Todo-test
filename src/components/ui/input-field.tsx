@@ -115,20 +115,22 @@ export const InputField = ({
 
   return (
     <FormControl width="100%">
-      <FormLabel
-        fontSize="14px"
-        textTransform={labelTextTransform || "lowercase"}
-        lineHeight="20px"
-        fontWeight="400"
-        color={labelColor || "#211E1D"}
-      >
-        {label}{" "}
-        {labelInfo && (
-          <Text as="span" color="var(--deep-blood)" display="inline">
-            *{labelInfo}
-          </Text>
-        )}
-      </FormLabel>
+      {label && (
+        <FormLabel
+          fontSize="14px"
+          textTransform={labelTextTransform || "lowercase"}
+          lineHeight="20px"
+          fontWeight="400"
+          color={labelColor || "#211E1D"}
+        >
+          {label}{" "}
+          {labelInfo && (
+            <Text as="span" color="var(--deep-blood)" display="inline">
+              *{labelInfo}
+            </Text>
+          )}
+        </FormLabel>
+      )}
 
       {password ? (
         <InputGroup>
@@ -254,21 +256,23 @@ export const TextAreaField = ({
   return (
     <>
       <FormControl width="100%">
-        <FormLabel
-          fontSize={labelSize || "16px"}
-          lineHeight="22px"
-          fontWeight="400"
-          color={labelColor || ""}
-        >
-          {label}
-        </FormLabel>
+        {label && (
+          <FormLabel
+            fontSize={labelSize || "16px"}
+            lineHeight="22px"
+            fontWeight="400"
+            color={labelColor || ""}
+          >
+            {label}
+          </FormLabel>
+        )}
 
         <Textarea
           autoComplete="true"
           fontSize="sm"
           placeholder={placeholder}
           borderRadius={radius ? radius : "8px"}
-          border={`1px solid ${borderColor || "var(--neutral-200)"}`}
+          border={`1px solid ${borderColor || "var(--light-gray-200)"}`}
           className={meta.touched && meta.error ? "shake" : ""}
           _placeholder={{
             fontWeight: "400",

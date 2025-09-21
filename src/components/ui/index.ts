@@ -5,3 +5,7 @@ export * from "./input-field";
 export * from "./sidenav";
 export * from "./sidenav-item";
 export * from "./header";
+export * from "./date-extended-picker";
+export * from "./priority-selector";
+export * from "./assignee-selector";
+export * from "./status-selector";
