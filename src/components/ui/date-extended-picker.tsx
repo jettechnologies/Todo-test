@@ -10,8 +10,6 @@ import {
   Button,
   SimpleGrid,
   Flex,
-  IconButton,
-  PopoverCloseButton,
   HStack,
   VStack,
   Box,
@@ -29,6 +27,7 @@ import {
 } from "date-fns";
 import { ParagraphText } from "../typography";
 import type { DatePickerProps } from "./datetime-picker";
+import { Calendar, Timer } from "iconsax-reactjs";
 
 const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
@@ -126,8 +125,8 @@ export const DateExtendedPicker = ({
   };
 
   const formattedDate = date
-    ? format(date, "dd/MM/yyyy")
-    : inputField?.placeholder || "DD/MM/YYYY";
+    ? format(date, "00/00/0000")
+    : inputField?.placeholder || "00/00/0000";
 
   const generateDates = (year: number, month: number) => {
     const firstDay = new Date(year, month, 1);
@@ -211,9 +210,10 @@ export const DateExtendedPicker = ({
         ) : (
           <Text
             cursor="pointer"
-            textDecor={date ? "none" : "underline"}
             onClick={() => setIsOpen(true)}
-            color={date ? "gray.500" : "blue.500"}
+            color="hsla(217, 15%, 76%, 1)"
+            fontSize="1rem"
+            fontWeight="500"
           >
             {formattedDate}
           </Text>
@@ -221,8 +221,6 @@ export const DateExtendedPicker = ({
       </PopoverTrigger>
 
       <PopoverContent minWidth="786px" boxShadow="xl" borderRadius="12px">
-        {/* <PopoverCloseButton /> */}
-
         <PopoverBody p={0}>
           <Flex>
             {/* Left Sidebar - Date Presets */}
@@ -272,6 +270,46 @@ export const DateExtendedPicker = ({
 
             {/* Right Side - Calendar */}
             <Box flex="1" p="20px">
+              <HStack
+                width="full"
+                mb="20px"
+                spacing={2}
+                height="54px"
+                rounded="10px"
+                p="6px"
+                background="hsla(0, 0%, 97%, 1)"
+              >
+                <HStack
+                  height="42px"
+                  rounded="10px"
+                  flex="1"
+                  px="10px"
+                  background="#fff"
+                >
+                  <Calendar size={18} color="hsla(221, 22%, 57%, 1)" />
+                  <ParagraphText
+                    value="DD/MM/YYYY"
+                    fontWeight="400"
+                    fontSize="1rem"
+                    color="hsla(221, 22%, 57%, 1)"
+                  />
+                </HStack>
+                <HStack
+                  height="42px"
+                  rounded="10px"
+                  flex="1"
+                  px="10px"
+                  background="#fff"
+                >
+                  <Timer size={18} color="hsla(221, 22%, 57%, 1)" />
+                  <ParagraphText
+                    value="00:00"
+                    fontWeight="400"
+                    fontSize="1rem"
+                    color="hsla(221, 22%, 57%, 1)"
+                  />
+                </HStack>
+              </HStack>
               <Flex justifyContent="space-between" alignItems="center" mb={2}>
                 <Button
                   onClick={() => changeMonth(-1)}

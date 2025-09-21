@@ -11,4 +11,19 @@
   --text-black-300: hsla(210, 5%, 45%, 1);
   --light-gray-200: hsla(189, 47%, 94%, 1);
   --plus-jakarta-sans: "Plus Jakarta Sans", sans-serif;
+
+  // toast color scheme
+  --success-700: #2f855a; /* A deep green for success */
+  --danger-700: #c53030; /* A deep red for error */
+  --toast-primary-600: #3182ce; /* A deep blue for info */
+  --warn-500: #dd6b20; /* A rich orange for warnings */
+  --success-100: hsla(152, 54%, 89%, 1);
+  --warn-100: hsla(34, 100%, 93%, 1);
+  --danger-100: hsla(338, 78%, 91%, 1);
+
+  // toast background
+  --success-25: #f0fdf4; /* Very light green for success background */
+  --danger-25: #fef2f2; /* Very light red for error background */
+  --toast-primary-25: #eff6ff; /* Very light blue for info background */
+  --warn-25: #fffaf0; /* Very light orange/yellow for warning background */
 }

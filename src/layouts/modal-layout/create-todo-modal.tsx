@@ -23,7 +23,7 @@ import { ParagraphText } from "@/components/typography";
 import { useState } from "react";
 import { getUsersOption } from "@/services/queries";
 import { useQuery } from "@tanstack/react-query";
-import type { UserResponse } from "@/types";
+import type { Priority, TodoStatus, UserResponse } from "@/types";
 
 interface CreateTodoModalProps {
   isOpen: boolean;
@@ -46,6 +46,8 @@ export const CreateTodoModal = ({ isOpen, onClose }: CreateTodoModalProps) => {
   const transformedUsers = users?.data?.map((user) => transformUsers(user));
 
   const handleSearchUser = (search: string) => setSearchUser(search);
+
+  const { mutateAsync: createTodo, isPending: creating } = useCreateTodo();
 
   return (
     <ModalLayout
@@ -78,8 +80,16 @@ export const CreateTodoModal = ({ isOpen, onClose }: CreateTodoModalProps) => {
             description: "",
           }}
           validationSchema={createTodoSchema}
-          onSubmit={(data) => {
-            console.log(data);
+          onSubmit={async (data, { resetForm }) => {
+            const newData = {
+              ...data,
+              priority: data.priority.toUpperCase() as Priority,
+              status: data.status.toUpperCase() as TodoStatus,
+            };
+
+            await createTodo(newData);
+            resetForm();
+            onClose();
           }}
         >
           {(formik) => {
@@ -89,6 +99,12 @@ export const CreateTodoModal = ({ isOpen, onClose }: CreateTodoModalProps) => {
                   name="taskName"
                   placeholder="Task Name"
                   height="30px"
+                  _placeholder={{
+                    fontFamily: "var(--plus-jakarta-sans)",
+                    fontWeight: "600",
+                    color: "hsla(217, 15%, 76%, 1)",
+                    fontSize: "30px",
+                  }}
                   sx={{
                     fontFamily: "var(--plus-jakarta-sans)",
                     fontWeight: "600",
@@ -216,6 +232,8 @@ export const CreateTodoModal = ({ isOpen, onClose }: CreateTodoModalProps) => {
                     _hover={{
                       background: "var(--light-green-500)",
                     }}
+                    isLoading={creating}
+                    loadingText="Creating..."
                   >
                     Create Task
                   </Button>

@@ -31,7 +31,7 @@ export const createTodoSchema = yup.object({
 
   assigneeIds: yup
     .array()
-    .of(yup.string().uuid("Invalid assignee ID"))
+    .of(yup.string())
     .min(1, "At least one assignee is required")
     .required("Assignees are required"),
 

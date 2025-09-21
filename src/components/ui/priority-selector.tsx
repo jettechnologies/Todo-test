@@ -47,9 +47,9 @@ function PriorityRadio({
   const checkbox = getRadioProps();
 
   return (
-    <Box as="label" w="full" cursor="pointer" onClick={onSelect}>
+    <Box as="label" w="full" cursor="pointer !important" onClick={onSelect}>
       <input {...input} hidden />
-      <Box {...checkbox} cursor="pointer">
+      <Box {...checkbox} cursor="pointer !important">
         <StatusBadge status={option.value as GlobalStatus} width="full" />
       </Box>
     </Box>
@@ -83,18 +83,18 @@ export function PrioritySelector({ name }: PrioritySelectorProps) {
       placement="bottom-start"
     >
       <PopoverTrigger>
-        <Text
-          fontSize="sm"
-          color="gray.700"
-          fontWeight="medium"
-          cursor="pointer"
-        >
-          {field.value ? (
-            <StatusBadge status={field.value} />
-          ) : (
-            "Select Priority"
-          )}
-        </Text>
+        {field.value ? (
+          <StatusBadge status={field.value} />
+        ) : (
+          <Text
+            color="hsla(217, 15%, 76%, 1)"
+            fontSize="1rem"
+            fontWeight="500"
+            cursor="pointer"
+          >
+            Select Priority
+          </Text>
+        )}
       </PopoverTrigger>
       <PopoverContent w="190px" _focus={{ boxShadow: "none" }}>
         <PopoverBody>
