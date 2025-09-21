@@ -1,5 +1,6 @@
 import type {
   CreateTodoRequest,
+  UserResponse,
   TodoResponse,
   UpdateTodoRequest,
 } from "@/types";
@@ -12,7 +13,7 @@ export interface PaginationMeta {
 }
 
 export interface PaginatedResponse<T> {
-  todos: T[];
+  data: T[];
   pagination: PaginationMeta;
 }
 
@@ -72,8 +73,29 @@ class ApiService {
     return this.request(`/todos${query}`);
   }
 
-  async getUsers(): Promise<PaginatedResponse<any>> {
-    return this.request("/users");
+  async getUsers(
+    params?: Record<string, string | number | undefined>
+  ): Promise<PaginatedResponse<UserResponse>> {
+    let query = "";
+
+    if (params) {
+      // remove undefined values
+      const cleanedParams = Object.fromEntries(
+        Object.entries(params).filter(([_, v]) => v !== undefined)
+      ) as Record<string, string | number>;
+
+      query = `?${new URLSearchParams(
+        Object.entries(cleanedParams).reduce(
+          (acc, [key, value]) => ({
+            ...acc,
+            [key]: String(value),
+          }),
+          {} as Record<string, string>
+        )
+      ).toString()}`;
+    }
+
+    return this.request(`/users${query}`);
   }
 
   // ✅ GET single todo

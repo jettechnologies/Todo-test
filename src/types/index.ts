@@ -58,3 +58,14 @@ export interface TodoResponse {
   updatedAt: string;
   assignees: AssigneeResponse[];
 }
+
+export interface UsersResponse {
+  id: string;
+  name: string;
+  email: string;
+  createdAt: string;
+  updatedAt: string;
+  _count: {
+    assignedTodos: number;
+  };
+}

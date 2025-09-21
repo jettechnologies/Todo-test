@@ -29,7 +29,7 @@ export const TodoTable = ({ todosData, isLoading }: TodoTableProps) => {
   const router = useRouter();
   const { filters, updateFilters } = useFilterStore();
 
-  const todos = transformTodos(todosData?.todos || []);
+  const todos = transformTodos(todosData?.data || []);
 
   type TodoRow = (typeof todos)[number];
 

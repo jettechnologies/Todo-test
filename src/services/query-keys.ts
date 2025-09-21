@@ -6,5 +6,6 @@ export const QUERY_KEYS = {
   },
   user: {
     all: () => ["user"],
+    list: (params?: Record<string, any>) => ["todos", { ...params }] as const,
   },
 };

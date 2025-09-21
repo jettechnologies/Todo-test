@@ -9,6 +9,8 @@ import {
   TextAreaField,
   DateExtendedPicker,
   PrioritySelector,
+  AssigneeSelector,
+  StatusSelector,
 } from "@/components/ui";
 import {
   Calendar,
@@ -18,13 +20,33 @@ import {
   Stickynote,
 } from "iconsax-reactjs";
 import { ParagraphText } from "@/components/typography";
+import { useState } from "react";
+import { getUsersOption } from "@/services/queries";
+import { useQuery } from "@tanstack/react-query";
+import type { UserResponse } from "@/types";
 
 interface CreateTodoModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
+const transformUsers = (user: UserResponse) => ({
+  id: user.id,
+  name: user.name,
+  email: user.email,
+});
+
 export const CreateTodoModal = ({ isOpen, onClose }: CreateTodoModalProps) => {
+  const [searchUser, setSearchUser] = useState<string>("");
+
+  const { data: users, isLoading: userLoading } = useQuery({
+    ...getUsersOption({ search: searchUser }),
+  });
+
+  const transformedUsers = users?.data?.map((user) => transformUsers(user));
+
+  const handleSearchUser = (search: string) => setSearchUser(search);
+
   return (
     <ModalLayout
       isOpen={isOpen}
@@ -51,7 +73,7 @@ export const CreateTodoModal = ({ isOpen, onClose }: CreateTodoModalProps) => {
             taskName: "",
             status: "",
             dates: "",
-            assigneeIds: "",
+            assigneeIds: [],
             priority: "",
             description: "",
           }}
@@ -74,12 +96,7 @@ export const CreateTodoModal = ({ isOpen, onClose }: CreateTodoModalProps) => {
                     fontSize: "30px",
                   }}
                 />
-                <VStack
-                  width="full"
-                  align="stretch"
-                  spacing="1rem"
-                  border="2px solid black"
-                >
+                <VStack width="full" align="stretch" spacing="1rem">
                   <HStack spacing={8}>
                     <HStack spacing={3}>
                       <Status
@@ -93,6 +110,12 @@ export const CreateTodoModal = ({ isOpen, onClose }: CreateTodoModalProps) => {
                         fontSize="1rem"
                       />
                     </HStack>
+                    <StatusSelector
+                      value={formik.values.status}
+                      onChange={(value) =>
+                        formik.setFieldValue("status", value)
+                      }
+                    />
                   </HStack>
                   <HStack spacing={8}>
                     <HStack spacing={3}>
@@ -124,6 +147,16 @@ export const CreateTodoModal = ({ isOpen, onClose }: CreateTodoModalProps) => {
                         fontSize="1rem"
                       />
                     </HStack>
+                    <AssigneeSelector
+                      onUserSelect={(selectedIds) =>
+                        formik.setFieldValue("assigneeIds", selectedIds)
+                      }
+                      selectedUserIds={[...formik.values.assigneeIds]}
+                      users={transformedUsers || []}
+                      onChangeSearchTerm={handleSearchUser}
+                      userLoading={userLoading}
+                      searchTerm={searchUser}
+                    />
                   </HStack>
                   <HStack spacing={8}>
                     <HStack spacing={3}>

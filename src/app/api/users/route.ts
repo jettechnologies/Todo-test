@@ -1,18 +1,49 @@
 import { prisma } from "@/lib/prisma";
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
-    const users = await prisma.user.findMany({
-      orderBy: { name: "asc" },
-      include: {
-        _count: {
-          select: { assignedTodos: true },
+    const { searchParams } = new URL(request.url);
+
+    const page = parseInt(searchParams.get("page") || "1");
+    const limit = parseInt(searchParams.get("limit") || "10");
+    const search = searchParams.get("search") || "";
+
+    const skip = (page - 1) * limit;
+
+    // Build where clause
+    const where: any = {};
+    if (search) {
+      where.OR = [
+        { name: { contains: search, mode: "insensitive" } },
+        { email: { contains: search, mode: "insensitive" } },
+      ];
+    }
+
+    const [users, totalCount] = await Promise.all([
+      prisma.user.findMany({
+        where,
+        orderBy: { name: "asc" },
+        skip,
+        take: limit,
+        include: {
+          _count: {
+            select: { assignedTodos: true },
+          },
         },
+      }),
+      prisma.user.count({ where }),
+    ]);
+
+    return NextResponse.json({
+      data: users,
+      pagination: {
+        page,
+        limit,
+        totalCount,
+        totalPages: Math.ceil(totalCount / limit),
       },
     });
-
-    return NextResponse.json(users);
   } catch (error) {
     console.error("Error fetching users:", error);
     return NextResponse.json(
@@ -21,6 +52,27 @@ export async function GET() {
     );
   }
 }
+
+// export async function GET() {
+//   try {
+//     const users = await prisma.user.findMany({
+//       orderBy: { name: "asc" },
+//       include: {
+//         _count: {
+//           select: { assignedTodos: true },
+//         },
+//       },
+//     });
+
+//     return NextResponse.json(users);
+//   } catch (error) {
+//     console.error("Error fetching users:", error);
+//     return NextResponse.json(
+//       { error: "Failed to fetch users" },
+//       { status: 500 }
+//     );
+//   }
+// }
 
 export async function POST(request: Request) {
   try {

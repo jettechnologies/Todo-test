@@ -2,10 +2,12 @@ import { QUERY_KEYS } from "../query-keys";
 import { queryOptions } from "@tanstack/react-query";
 import { apiService } from "../api-service";
 
-export const getUsersOption = () => {
+export const getUsersOption = (
+  params?: Record<string, string | number | undefined>
+) => {
   return queryOptions({
-    queryKey: QUERY_KEYS.user.all(),
-    queryFn: () => apiService.getUsers(),
+    queryKey: QUERY_KEYS.user.list(params),
+    queryFn: () => apiService.getUsers(params),
   });
 };
 

@@ -255,7 +255,7 @@ const KanbanBoard = ({
 
   if (!todosData) return null;
 
-  const todos = todosData.todos;
+  const todos = todosData.data;
 
   const todoTasks = todos.filter((t) => t.status === TodoStatus.TODO);
   const inProgressTasks = todos.filter(
