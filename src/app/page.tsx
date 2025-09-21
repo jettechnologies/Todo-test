@@ -16,7 +16,7 @@ export default function Home() {
   useEffect(() => {
     const timer = setTimeout(() => {
       router.push("/todowy?ui=row-horizontal");
-    }, 4000);
+    }, 2500);
 
     return () => clearTimeout(timer);
   }, [router]);

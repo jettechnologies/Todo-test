@@ -125,7 +125,7 @@ export const DateExtendedPicker = ({
   };
 
   const formattedDate = date
-    ? format(date, "00/00/0000")
+    ? format(date, "dd/MM/yyyy")
     : inputField?.placeholder || "00/00/0000";
 
   const generateDates = (year: number, month: number) => {
