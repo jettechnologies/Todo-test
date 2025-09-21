@@ -1,4 +1,4 @@
-import { Badge, Box, Text } from "@chakra-ui/react";
+import { Badge, Text } from "@chakra-ui/react";
 import { Flag } from "iconsax-reactjs";
 
 type PriorityStatus = "urgent" | "important" | "normal" | "low";

@@ -65,6 +65,7 @@ export const SideNavItem = ({
 
               return (
                 <Box
+                  key={child.label}
                   as={Link}
                   href={child.to}
                   display="block"

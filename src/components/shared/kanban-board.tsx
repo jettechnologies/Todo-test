@@ -4,7 +4,6 @@ import {
   VStack,
   HStack,
   Text,
-  Badge,
   Avatar,
   AvatarGroup,
   IconButton,
@@ -48,27 +47,27 @@ const colors = {
 };
 
 // Priority color mapping
-const priorityColors: Record<
-  Priority,
-  { bg: string; color: string; dot: string }
-> = {
-  URGENT: { bg: "#FFE5E5", color: "#FF4444", dot: "#FF4444" },
-  IMPORTANT: {
-    bg: colors.lightYellow200,
-    color: colors.yellow,
-    dot: colors.yellow,
-  },
-  NORMAL: {
-    bg: colors.lightPurple200,
-    color: colors.purple,
-    dot: colors.purple,
-  },
-  LOW: {
-    bg: colors.lightGreen200,
-    color: colors.lightGreen500,
-    dot: colors.lightGreen500,
-  },
-};
+// const priorityColors: Record<
+//   Priority,
+//   { bg: string; color: string; dot: string }
+// > = {
+//   URGENT: { bg: "#FFE5E5", color: "#FF4444", dot: "#FF4444" },
+//   IMPORTANT: {
+//     bg: colors.lightYellow200,
+//     color: colors.yellow,
+//     dot: colors.yellow,
+//   },
+//   NORMAL: {
+//     bg: colors.lightPurple200,
+//     color: colors.purple,
+//     dot: colors.purple,
+//   },
+//   LOW: {
+//     bg: colors.lightGreen200,
+//     color: colors.lightGreen500,
+//     dot: colors.lightGreen500,
+//   },
+// };
 
 // Status color mapping
 const statusColors: Record<TodoStatus, { bg: string; title: string }> = {

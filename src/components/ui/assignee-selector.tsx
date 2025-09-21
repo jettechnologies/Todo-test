@@ -15,6 +15,9 @@ import {
   PopoverContent,
   PopoverBody,
   AvatarGroup,
+  Spinner,
+  Skeleton,
+  SkeletonCircle,
 } from "@chakra-ui/react";
 import { SearchNormal } from "iconsax-reactjs";
 
@@ -39,7 +42,7 @@ export function AssigneeSelector({
   users,
   searchTerm,
   onChangeSearchTerm,
-  userLoading,
+  userLoading = false,
 }: AssigneeSelectorProps) {
   const selectedUsers = users.filter((u) => selectedUserIds.includes(u.id));
 
@@ -88,41 +91,62 @@ export function AssigneeSelector({
               bg="hsla(0, 0%, 97%, 1)"
               border="1px solid hsla(224, 48%, 95%, 1)"
               _focus={{ bg: "white", border: "1px", borderColor: "blue.200" }}
+              isDisabled={userLoading}
             />
           </InputGroup>
 
-          <VStack spacing={2} align="stretch">
-            {users.map((user) => {
-              const isSelected = selectedUserIds.includes(user.id);
-              return (
-                <Box
-                  key={user.id}
-                  cursor="pointer"
-                  borderRadius="md"
-                  p={2}
-                  _hover={{ bg: "gray.50" }}
-                  bg={isSelected ? "blue.50" : "transparent"}
-                  onClick={() => toggleUser(user.id)}
-                >
-                  <HStack spacing={3}>
-                    <Avatar size="sm" name={user.name} />
-                    <Text
-                      fontSize="1rem"
-                      fontFamily="var(--plus-jakarta-sans)"
-                      color="hsla(210, 7%, 29%, 1)"
-                    >
-                      {user.name}
-                    </Text>
-                    {isSelected && (
-                      <Text fontSize="xs" color="blue.500" ml="auto">
-                        Selected
+          {userLoading ? (
+            <VStack spacing={2} align="stretch">
+              {[1, 2, 3].map((i) => (
+                <HStack key={i} spacing={3}>
+                  <SkeletonCircle height="32px" width="32px" />
+                  <Skeleton height="16px" width="80%" />
+                </HStack>
+              ))}
+              <Box textAlign="center" py={2}>
+                <Spinner size="sm" color="blue.500" />
+              </Box>
+            </VStack>
+          ) : users.length === 0 ? (
+            <Box textAlign="center" py={6}>
+              <Text fontSize="sm" color="gray.500">
+                No users found
+              </Text>
+            </Box>
+          ) : (
+            <VStack spacing={2} align="stretch">
+              {users.map((user) => {
+                const isSelected = selectedUserIds.includes(user.id);
+                return (
+                  <Box
+                    key={user.id}
+                    cursor="pointer"
+                    borderRadius="md"
+                    p={2}
+                    _hover={{ bg: "gray.50" }}
+                    bg={isSelected ? "blue.50" : "transparent"}
+                    onClick={() => toggleUser(user.id)}
+                  >
+                    <HStack spacing={3}>
+                      <Avatar size="sm" name={user.name} />
+                      <Text
+                        fontSize="1rem"
+                        fontFamily="var(--plus-jakarta-sans)"
+                        color="hsla(210, 7%, 29%, 1)"
+                      >
+                        {user.name}
                       </Text>
-                    )}
-                  </HStack>
-                </Box>
-              );
-            })}
-          </VStack>
+                      {isSelected && (
+                        <Text fontSize="xs" color="blue.500" ml="auto">
+                          Selected
+                        </Text>
+                      )}
+                    </HStack>
+                  </Box>
+                );
+              })}
+            </VStack>
+          )}
         </PopoverBody>
       </PopoverContent>
     </Popover>

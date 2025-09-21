@@ -39,7 +39,7 @@ export interface CustomInputProps extends ChakraInputProps {
   password?: boolean;
   placeholder?: string;
   size?: string;
-  radius?: string | number | {};
+  radius?: string | number;
   boldLabel?: boolean;
   icon?: React.ReactElement;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -58,7 +58,7 @@ interface InputProps extends ChakraTextareaProps {
   password?: boolean;
   placeholder?: string;
   size?: string;
-  radius?: string | number | {};
+  radius?: string | number;
   boldLabel?: boolean;
   borderColor?: string;
   placeholderColor?: string;

@@ -29,7 +29,8 @@ export interface CreateTodoRequest {
 //   id: string;
 // }
 
-export interface UpdateTodoRequest extends Partial<CreateTodoRequest> {}
+export type UpdateTodoRequest = Partial<CreateTodoRequest>;
+
 // For compatibility with existing DataGrid component
 export type TransactionStatus = TodoStatus;
 export type PriorityStatus = Priority;
